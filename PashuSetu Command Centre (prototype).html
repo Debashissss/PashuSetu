@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>PashuSetu Command Centre</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e4e8f6;--card:#eceffb;--ink:#2b3055;--mute:#6a7197;--hi:#fff;--lo:#b9c1e0;--g:#6fd3a2;--y:#ffd166;--r:#ff7f8f;--ac:#7b7fff;--ac2:#b58cff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1e2242;--card:#282d55;--ink:#eef0ff;--mute:#9aa1cf;--hi:#343a6c;--lo:#12152f}}
+:root[data-theme="dark"]{--bg:#1e2242;--card:#282d55;--ink:#eef0ff;--mute:#9aa1cf;--hi:#343a6c;--lo:#12152f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:700 14px/1.45 Nunito,system-ui,sans-serif;min-height:100vh}
+h1,h2,h3,.num{font-family:Fredoka,Nunito,system-ui,sans-serif;font-weight:600;margin:0}
+.clay{background:var(--card);border-radius:30px;box-shadow:10px 10px 24px var(--lo),-10px -10px 24px var(--hi),inset 4px 4px 8px rgba(255,255,255,.3),inset -4px -4px 8px rgba(0,0,0,.05)}
+.dent{background:var(--bg);border-radius:20px;box-shadow:inset 5px 5px 10px var(--lo),inset -5px -5px 10px var(--hi)}
+button,select{font:inherit;color:var(--ink);border:0;cursor:pointer}
+.btn{border-radius:999px;padding:9px 16px;background:var(--card);font-weight:800;box-shadow:5px 5px 12px var(--lo),-5px -5px 12px var(--hi),inset 2px 2px 4px rgba(255,255,255,.3);transition:transform .15s,box-shadow .15s}
+.btn:active,.btn.on{box-shadow:inset 4px 4px 8px var(--lo),inset -4px -4px 8px var(--hi);transform:scale(.97)}
+.btn.pri{background:linear-gradient(145deg,#9aa0ff,#6f74f0);color:#fff;box-shadow:6px 6px 14px rgba(111,116,240,.4),-4px -4px 10px var(--hi),inset 2px 2px 5px rgba(255,255,255,.4)}
+.btn.sm{padding:6px 12px;font-size:12px}
+:focus-visible{outline:3px solid var(--ac);outline-offset:3px}
+.wrap{max-width:1280px;margin:0 auto;padding:18px}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:14px 20px;margin-bottom:18px}
+.logo{display:flex;gap:12px;align-items:center}.logo i{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;font-size:26px;font-style:normal;background:linear-gradient(145deg,#fff,var(--bg));box-shadow:5px 5px 12px var(--lo),-5px -5px 12px var(--hi)}
+.logo h1{font-size:24px}.logo small{color:var(--mute);display:block;font-size:12px}
+.ctl{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+select.btn{padding-right:12px}
+.chip{display:inline-flex;gap:6px;align-items:center;border-radius:999px;padding:7px 14px;font-weight:800;font-size:12px}
+.sim{background:#fff3cc;color:#7a5a00;border-radius:999px;padding:6px 14px;font-size:12px;margin-bottom:14px;display:inline-block;box-shadow:4px 4px 10px var(--lo)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:18px}
+.kpi{padding:16px;display:flex;gap:12px;align-items:center}.kpi i{font-style:normal;font-size:22px;width:46px;height:46px;border-radius:16px;display:grid;place-items:center;flex:none}
+.kpi .num{font-size:26px;line-height:1}.kpi span{color:var(--mute);font-size:12px}
+.grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:18px;margin-bottom:18px}
+.row3{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;margin-bottom:18px}
+.pad{padding:18px}.pad h2{font-size:18px;margin-bottom:10px}
+.maptop{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;margin-bottom:10px}
+svg{display:block;width:100%;height:auto}
+.vil{cursor:pointer;filter:drop-shadow(3px 5px 4px rgba(40,50,100,.3));transition:transform .2s;transform-box:fill-box;transform-origin:center}.vil:hover{transform:scale(1.2)}
+.pulse{animation:pl 2.2s ease-out infinite;transform-box:fill-box;transform-origin:center}@keyframes pl{0%{transform:scale(.6);opacity:.7}100%{transform:scale(2.2);opacity:0}}
+.dim{opacity:.18}.hide{display:none}
+.info{margin-top:10px;padding:12px 16px;min-height:52px}
+.feed{display:flex;flex-direction:column;gap:12px;max-height:520px;overflow:auto;padding:6px 8px 10px 4px}
+.al{padding:14px;border-radius:24px;background:var(--card);box-shadow:6px 6px 14px var(--lo),-6px -6px 14px var(--hi);border-left:10px solid var(--y)}
+.al.r{border-left-color:var(--r)}.al.y{border-left-color:var(--y)}.al h3{font-size:15px}.al p{margin:4px 0 8px;color:var(--mute);font-size:12px}
+.tag{display:inline-block;border-radius:999px;padding:2px 10px;font-size:11px;background:var(--bg);box-shadow:inset 2px 2px 4px var(--lo),inset -2px -2px 4px var(--hi);margin-right:4px}
+.acts{display:flex;flex-wrap:wrap;gap:8px}
+.ok{color:#1c8a5a}.tbl{width:100%;border-collapse:separate;border-spacing:0 8px}.tbl td{padding:8px 10px;background:var(--bg);font-size:12px}.tbl td:first-child{border-radius:14px 0 0 14px}.tbl td:last-child{border-radius:0 14px 14px 0}
+.bar{height:16px;border-radius:99px;background:var(--bg);box-shadow:inset 3px 3px 6px var(--lo),inset -3px -3px 6px var(--hi);overflow:hidden;flex:1}.bar b{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--g),#9be8c4)}
+.bar.low b{background:linear-gradient(90deg,var(--r),#ffb0ba)}
+.cov{display:flex;gap:10px;align-items:center;margin:10px 0}.cov span{width:70px;font-size:12px}
+.steps{display:flex;align-items:center;margin:6px 0 14px}.steps i{width:22px;height:22px;border-radius:50%;background:var(--bg);box-shadow:inset 2px 2px 4px var(--lo),inset -2px -2px 4px var(--hi);flex:none}.steps i.d{background:var(--g);box-shadow:2px 2px 6px var(--lo)}.steps u{height:5px;flex:1;background:var(--bg);box-shadow:inset 1px 1px 2px var(--lo)}.steps u.d{background:var(--g)}
+.lbl{display:flex;justify-content:space-between;font-size:11px;color:var(--mute)}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);padding:calc(18px + env(safe-area-inset-top,0px)) 18px calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(105%);transition:transform .35s cubic-bezier(.3,1.3,.5,1);overflow:auto;z-index:20;border-radius:36px 0 0 36px}
+.drawer.open{transform:none}
+.meter{height:22px;border-radius:99px;background:linear-gradient(90deg,var(--g),var(--y),var(--r));position:relative;box-shadow:inset 3px 3px 6px rgba(0,0,0,.12)}.meter i{position:absolute;top:-5px;width:32px;height:32px;border-radius:50%;background:var(--card);box-shadow:3px 3px 8px var(--lo);transform:translateX(-50%)}
+.chk{display:flex;gap:10px;align-items:flex-start;margin:8px 0;padding:10px 12px}.chk input{width:20px;height:20px;accent-color:var(--ac);flex:none}
+.modal{position:fixed;inset:0;display:none;place-items:center;background:rgba(30,34,66,.45);z-index:30;padding:18px}.modal.open{display:grid}.modal .clay{max-width:460px;width:100%;padding:22px}
+.q{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.foot{text-align:center;color:var(--mute);font-size:12px;padding:10px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}.feed{max-height:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body><div class="wrap">
+<header class="clay"><div class="logo"><i>🐄</i><div><h1>PashuSetu</h1><small>Farm to Lab to Command Centre</small></div></div>
+<div class="ctl"><select class="btn" id="blk" aria-label="Block"><option value="">Demo District, all blocks</option><option>A</option><option>B</option><option>C</option></select>
+<select class="btn" id="rng" aria-label="Date range"><option>Last 7 days</option><option>Last 30 days</option><option>Last 90 days</option></select>
+<button class="btn" id="off">Online</button><button class="btn" id="th">Theme</button><button class="btn pri" id="simb">Simulate farmer report</button></div></header>
+<span class="sim">Prototype with simulated data for demonstration. Not real cases.</span>
+<section class="kpis" id="kpis"></section>
+<section class="grid"><div class="clay pad"><div class="maptop"><h2>Village risk map</h2><div class="ctl" id="lay"></div></div><div class="dent" style="padding:8px"><svg id="map" viewBox="0 0 600 390" role="img" aria-label="Stylised district map with village markers"></svg></div><div class="clay info dent" id="info">Tap a village to see its latest report.</div></div>
+<div class="clay pad"><h2>Live alerts</h2><div class="feed" id="feed"></div></div></section>
+<section class="row3"><div class="clay pad"><h2>Weekly reports and spike detection</h2><svg id="ch" viewBox="0 0 300 150"></svg><div class="lbl"><span>12 weeks ago</span><span>This week</span></div></div>
+<div class="clay pad"><h2>Vaccination coverage by block</h2><div id="cov"></div><p style="color:var(--mute);font-size:12px">Blocks under 60% are flagged for ring vaccination drives.</p></div>
+<div class="clay pad"><h2>Next 30 days risk forecast</h2><table class="tbl" id="risk"></table></div></section>
+<section class="row3"><div class="clay pad"><h2>Lab referral loop</h2><div id="lab"></div></div>
+<div class="clay pad"><h2>How reports arrive</h2><div id="chan"></div></div>
+<div class="clay pad"><h2>Offline queue</h2><p id="qtxt">All devices synced. Turn on offline mode and simulate a report to see reports saved on the phone and sent later.</p><div class="q"><button class="btn sm" id="sync">Sync now</button></div></div></section>
+<p class="foot">Built to work with NDLM, NADRES, NADCP and IDSP. One Health approach, role-based access, aware of the DPDP Act 2023. Signed in as District Veterinary Officer.</p></div>
+<aside class="drawer clay" id="dr" aria-label="Outbreak details"></aside>
+<div class="modal" id="md"><div class="clay" id="mb"></div></div>
+<script>
+const C={g:'#6fd3a2',y:'#ffd166',r:'#ff7f8f'};
+let V=[{n:'Kishanpur',b:'B',x:330,y:165,t:'r',c:9,sp:'Cattle',s:'Drooling, lameness, mouth sores',ch:'IVR',d:'Suspected FMD',cf:88},
+{n:'Dhanipur',b:'B',x:372,y:208,t:'r',c:6,sp:'Cattle, buffalo',s:'Fever, hoof sores',ch:'App',d:'Suspected FMD',cf:81},
+{n:'Laxmipur',b:'B',x:298,y:218,t:'r',c:4,sp:'Cattle',s:'Drooling, reduced feed',ch:'WhatsApp',d:'Suspected FMD',cf:74},
+{n:'Mohanpur',b:'A',x:105,y:150,t:'r',c:2,sp:'Cattle',s:'Sudden death, bleeding',ch:'SMS',d:'Suspected anthrax (zoonotic)',cf:69,z:1},
+{n:'Bhatpara',b:'C',x:160,y:285,t:'y',c:3,sp:'Goats',s:'Fever, reduced milk',ch:'WhatsApp',d:'Watch: unspecified fever',cf:52},
+{n:'Sonari',b:'A',x:470,y:108,t:'y',c:2,sp:'Buffalo',s:'Skin nodules',ch:'App',d:'Watch: skin lesions',cf:47},
+{n:'Rampur',b:'A',x:200,y:100,t:'g',c:0,sp:'Cattle',s:'No signs',ch:'App'},{n:'Telipara',b:'A',x:260,y:75,t:'g',c:0,sp:'Goats',s:'No signs',ch:'IVR'},
+{n:'Gopalganj',b:'C',x:250,y:300,t:'g',c:0,sp:'Cattle',s:'No signs',ch:'App'},{n:'Nayagaon',b:'C',x:400,y:300,t:'g',c:0,sp:'Pigs',s:'No signs',ch:'SMS'},
+{n:'Haripur',b:'B',x:455,y:225,t:'g',c:0,sp:'Cattle',s:'No signs',ch:'IVR'},{n:'Kalyani',b:'A',x:350,y:90,t:'g',c:0,sp:'Buffalo',s:'No signs',ch:'App'},{n:'Mitali',b:'C',x:80,y:250,t:'g',c:0,sp:'Cattle',s:'No signs',ch:'WhatsApp'}];
+let off=0,q=[],L={Cases:1,Forecast:1,Labs:1,Markets:1},st={},cur=null;
+const $=i=>document.getElementById(i);
+function kp(){const a=V.filter(v=>v.t=='r').length;const k=[['📞',V.reduce((s,v)=>s+1+v.c,0)+34,'Reports today','#dfe3ff'],['🚨',a,'Suspected outbreaks','#ffdfe3'],['⏱','5.2h','Average time to report','#d7f5e6'],['💉','63%','Vaccination coverage','#fff0c4'],['🧪',3,'Samples at lab','#e7dcff'],['⚠️',1,'Zoonotic alerts','#ffe0cc']];
+$('kpis').innerHTML=k.map(x=>`<div class="clay kpi"><i style="background:${x[3]}">${x[0]}</i><div><div class="num">${x[1]}</div><span>${x[2]}</span></div></div>`).join('')}
+function map(){const b=$('blk').value;let h=`<defs><radialGradient id="rg"><stop offset="0" stop-color="#ff7f8f" stop-opacity=".5"/><stop offset="1" stop-color="#ff7f8f" stop-opacity="0"/></radialGradient><linearGradient id="ld" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f6ff"/><stop offset="1" stop-color="#d9def5"/></linearGradient></defs>
+<path d="M60 90Q140 25 300 45T530 75Q585 180 550 275Q480 360 330 350T100 320Q30 225 60 90Z" fill="url(#ld)" stroke="#fff" stroke-width="5"/>
+<path d="M130 60Q220 160 280 190T430 300" fill="none" stroke="#a9d8ff" stroke-width="12" stroke-linecap="round" opacity=".8"/>`;
+h+=`<g class="${L.Forecast?'':'hide'}"><circle cx="160" cy="285" r="50" fill="#ffd166" opacity=".22"/><circle cx="470" cy="108" r="42" fill="#ffd166" opacity=".22"/><circle cx="440" cy="225" r="38" fill="#ffb27a" opacity=".22"/></g>`;
+h+=`<g class="${L.Cases?'':'hide'}"><circle cx="335" cy="195" r="105" fill="url(#rg)"/><circle cx="335" cy="195" r="88" fill="none" stroke="#ff7f8f" stroke-width="3" stroke-dasharray="9 7"/><text x="335" y="297" text-anchor="middle" font-size="11" fill="#d94b60" font-weight="800">Ring vaccination zone</text></g>`;
+h+=`<g class="${L.Labs?'':'hide'}" font-size="20"><text x="330" y="140">🧪</text><text x="205" y="195">🏥</text></g><g class="${L.Markets?'':'hide'}" font-size="20"><text x="420" y="160">🛒</text><text x="120" y="320">🛒</text></g>`;
+V.forEach((v,i)=>{const r=11+Math.min(v.c,9),d=b&&v.b!=b?' dim':'';h+=`<g class="${L.Cases||v.t=='g'?'':'hide'}${d}">${v.t=='r'?`<circle class="pulse" cx="${v.x}" cy="${v.y}" r="${r}" fill="${C.r}"/>`:''}<circle class="vil" data-i="${i}" cx="${v.x}" cy="${v.y}" r="${r}" fill="${C[v.t]}" stroke="#fff" stroke-width="3" tabindex="0" role="button" aria-label="${v.n}"/><ellipse cx="${v.x-r/3}" cy="${v.y-r/3}" rx="${r/3}" ry="${r/4}" fill="#fff" opacity=".55" pointer-events="none"/><text x="${v.x}" y="${v.y+r+13}" text-anchor="middle" font-size="10.5" font-weight="800" fill="#2b3055" opacity=".85">${v.n}</text></g>`});
+$('map').innerHTML=h;document.querySelectorAll('.vil').forEach(e=>{const f=()=>{const v=V[e.dataset.i];$('info').innerHTML=`<b>${v.n}</b> (block ${v.b}) <span class="tag">${v.sp}</span><span class="tag">via ${v.ch}</span><br>${v.s}${v.c?`, ${v.c} animals affected`:''}`};e.onclick=f;e.onkeydown=k=>{if(k.key=='Enter')f()}})}
+function lay(){$('lay').innerHTML=Object.keys(L).map(k=>`<button class="btn sm ${L[k]?'on':''}" data-k="${k}">${k}</button>`).join('');document.querySelectorAll('#lay .btn').forEach(e=>e.onclick=()=>{L[e.dataset.k]^=1;lay();map()})}
+function feed(){const b=$('blk').value;$('feed').innerHTML=V.map((v,i)=>[v,i]).filter(([v])=>v.t!='g'&&(!b||v.b==b)).sort((a,b)=>b[0].c-a[0].c).map(([v,i])=>{const s=st[v.n]||'Pending vet check';return`<div class="al ${v.t}"><h3>${v.n}: ${v.d}</h3><p>${v.c} animals, ${v.sp}. ${v.s}</p><span class="tag">${v.cf}% confidence</span><span class="tag">via ${v.ch}</span><span class="tag ${s=='Confirmed'?'ok':''}">${s}</span><div class="acts" style="margin-top:10px"><button class="btn sm" data-o="${i}">Open plan</button><button class="btn sm" data-v="${i}">Verify</button>${v.z?`<button class="btn sm" data-z="${i}">Notify IDSP</button>`:`<button class="btn sm" data-s="${i}">Create sample QR</button>`}</div></div>`}).join('')||'<p>No alerts in this block. Reports are flowing normally.</p>';
+document.querySelectorAll('[data-o]').forEach(e=>e.onclick=()=>open(e.dataset.o));document.querySelectorAll('[data-v]').forEach(e=>e.onclick=()=>{st[V[e.dataset.v].n]='Confirmed';feed()});document.querySelectorAll('[data-z]').forEach(e=>e.onclick=()=>{e.textContent='Public health notified';e.classList.add('on')});document.querySelectorAll('[data-s]').forEach(e=>e.onclick=()=>{e.textContent='QR created';e.classList.add('on')})}
+function open(i){const v=V[i];cur=i;const lg=v.z?'Do not open or move the carcass. Keep people and animals away. Call your vet now.':'Suspected foot-and-mouth disease near your village. Keep sick animals apart and call your para-vet.';
+$('dr').innerHTML=`<div class="q" style="justify-content:space-between"><h2>${v.n}</h2><button class="btn sm" id="cl">Close</button></div><p>${v.d}, ${v.c} animals, ${v.sp}</p><div class="dent" style="padding:16px 18px"><div class="lbl"><span>Low</span><span>Risk score</span><span>High</span></div><div class="meter" style="margin-top:6px"><i style="left:${v.cf}%"></i></div></div>
+<h3 style="margin:16px 0 4px">Containment plan</h3>${(v.z?['Isolate the area and keep the carcass unopened','Notify public health (IDSP)','Send sample with QR code to the lab','Send local-language advisory','Assign para-vet follow-up']:['Isolate sick animals','Restrict animal movement and markets in the zone','Ring vaccination: 412 animals in 3 villages (simulated)','Send local-language advisory','Assign 3 para-vet tasks']).map(t=>`<label class="chk dent"><input type="checkbox"><span>${t}</span></label>`).join('')}
+<h3 style="margin:16px 0 6px">Advisory preview</h3><div class="acts"><button class="btn sm on" data-l="0">English</button><button class="btn sm" data-l="1">Hindi</button></div><div class="dent" style="padding:14px;margin-top:10px" id="adv">${lg}</div><p style="color:var(--mute);font-size:12px">The vet verifies every alert before it goes out.</p><div class="acts"><button class="btn pri" id="cf">Confirm outbreak</button><button class="btn" id="fa">Mark as false alarm</button></div>`;
+const H=v.z?'शव को न खोलें। लोगों और पशुओं को दूर रखें। तुरंत पशु चिकित्सक को बुलाएं।':'आपके गाँव के पास संदिग्ध खुरपका-मुँहपका रोग है। बीमार पशुओं को अलग रखें और पशु मित्र को बुलाएं।';
+document.querySelectorAll('[data-l]').forEach(e=>e.onclick=()=>{$('adv').textContent=e.dataset.l==1?H:lg;document.querySelectorAll('[data-l]').forEach(x=>x.classList.toggle('on',x==e))});
+$('cl').onclick=()=>$('dr').classList.remove('open');$('cf').onclick=()=>{st[v.n]='Confirmed';feed();$('dr').classList.remove('open')};$('fa').onclick=()=>{st[v.n]='False alarm';feed();$('dr').classList.remove('open')};$('dr').classList.add('open')}
+function charts(){const d=[4,5,3,6,5,7,6,9,14,22,31,38],T=12,p=d.map((y,i)=>[10+i*25.5,130-y*3]);
+$('ch').innerHTML=`<path d="M${p.map(a=>a.join(',')).join('L')}L${p[11][0]},130L10,130Z" fill="#7b7fff" opacity=".15"/><line x1="0" x2="300" y1="${130-T*3}" y2="${130-T*3}" stroke="#ff7f8f" stroke-width="2" stroke-dasharray="6 5"/><text x="4" y="${124-T*3}" font-size="9" fill="#d94b60" font-weight="800">Alert threshold</text><path d="M${p.map(a=>a.join(',')).join('L')}" fill="none" stroke="#7b7fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>${p.map((a,i)=>`<circle cx="${a[0]}" cy="${a[1]}" r="${d[i]>T?6:3.5}" fill="${d[i]>T?'#ff7f8f':'#7b7fff'}" stroke="#fff" stroke-width="2"/>`).join('')}`;
+$('cov').innerHTML=[['Block A',78],['Block B',54],['Block C',86]].map(x=>`<div class="cov"><span>${x[0]}</span><div class="bar ${x[1]<60?'low':''}"><b style="width:${x[1]}%"></b></div><b>${x[1]}%</b></div>`).join('');
+$('risk').innerHTML=[['Dhanipur','High','🌧 ▲ 💉 gap'],['Haripur','Medium','📅 season 🐄 dense'],['Bhatpara','Medium','💉 gap'],['Gopalganj','Low','Stable']].map(x=>`<tr><td><b>${x[0]}</b></td><td><span class="tag" style="background:${x[1]=='High'?'#ffd0d6':x[1]=='Medium'?'#fff0c4':'#d7f5e6'}">${x[1]}</span></td><td>${x[2]}</td></tr>`).join('');
+$('lab').innerHTML=[['Kishanpur sample',3],['Mohanpur sample',2],['Dhanipur sample',1]].map(x=>`<b>${x[0]}</b><div class="steps">${[0,1,2,3,4].map(k=>(k?`<u class="${k<=x[1]?'d':''}"></u>`:'')+`<i class="${k<=x[1]?'d':''}"></i>`).join('')}</div>`).join('')+'<div class="lbl"><span>Collected</span><span>In transit</span><span>At lab</span><span>Result</span><span>Action</span></div>';
+$('chan').innerHTML=[['Missed call or IVR',38],['Phone app',29],['WhatsApp',21],['SMS',12]].map(x=>`<div class="cov"><span style="width:110px">${x[0]}</span><div class="bar"><b style="width:${x[1]*2}%;background:linear-gradient(90deg,var(--ac),var(--ac2))"></b></div><b>${x[1]}%</b></div>`).join('')}
+function sim(){const m=$('mb');m.innerHTML=`<h2>Farmer report</h2><p class="dent" style="padding:14px;margin-top:10px">“My cow is not eating and is limping. Two calves died.”</p><p><span class="tag">Cattle</span><span class="tag">Limping</span><span class="tag">Not eating</span><span class="tag">2 deaths</span><span class="tag">Chandrapur</span></p><p>Read-back to farmer: “You reported a cow limping and not eating. Is this correct?”</p><div class="acts"><button class="btn pri" id="ys">Farmer confirms</button><button class="btn" id="no">Cancel</button></div>`;$('md').classList.add('open');
+$('no').onclick=()=>$('md').classList.remove('open');$('ys').onclick=()=>{$('md').classList.remove('open');const r={n:'Chandrapur',b:'C',x:300,y:325,t:'y',c:3,sp:'Cattle',s:'Limping, not eating, 2 deaths',ch:'IVR',d:'Watch: yellow triage',cf:58};if(off){q.push(r);qs()}else{V.push(r);all()}}}
+function qs(){$('off').textContent=off?'Offline: '+q.length+' queued':'Online';$('qtxt').textContent=q.length?q.length+' report(s) saved on the phone. They will send when the network returns.':'All devices synced. Turn on offline mode and simulate a report to see reports saved on the phone and sent later.'}
+function all(){kp();map();feed();qs()}
+$('off').onclick=()=>{off^=1;qs();$('off').classList.toggle('on',off)};$('sync').onclick=()=>{if(!off){q.forEach(r=>V.push(r));q=[];all()}else $('qtxt').textContent='Still offline. Go online to sync.'};
+$('simb').onclick=sim;$('blk').onchange=()=>{map();feed()};
+$('th').onclick=()=>{const r=document.documentElement,d=matchMedia('(prefers-color-scheme:dark)').matches;const cur=r.dataset.theme||(d?'dark':'light');r.dataset.theme=cur=='dark'?'light':'dark'};
+lay();charts();all();
+</script></body></html>
